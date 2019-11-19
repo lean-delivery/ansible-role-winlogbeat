@@ -19,7 +19,7 @@
 # https://go.es.io/WinlogbeatConfig
 winlogbeat.event_logs:
   - name: Application
-    ignore_older: 72h
+    ignore_older: "{{ winlogbeat_ignore_older }}"
 
   - name: System
 
