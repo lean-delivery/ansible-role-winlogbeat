@@ -50,7 +50,7 @@ provisioner:
     create: ../resources/provisioning/AZURE/create.yml
     prepare: ../resources/provisioning/AZURE/prepare.yml
     destroy: ../resources/provisioning/AZURE/destroy.yml
-    verify: ../resources/tests/verify.yml
+    verify: ../resources/tests/verify_win.yml
   lint:
     name: ansible-lint
 scenario:
