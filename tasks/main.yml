@@ -7,9 +7,6 @@
   loop_control:
     loop_var: platform_vars
 
-- name: Load a variable file based on the service manager
-  include_vars: '{{ ansible_service_mgr }}.yml'
-
 - block:
     - name: Fetch release page
       uri:
