@@ -1,2 +1,43 @@
 ---
-# defaults file for winlogbeat
+elastic_branch: 7
+winlogbeat_version: '{{ wb_major_version }}'
+winlogbeat_last_version: 7.4.2
+winlogbeat_find_last_version: false
+es_win_url: 'https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-{{ winlogbeat_version }}-windows-x86_64.zip'
+es_use_oss_version: true
+winlogbeat_node_name: '{{ inventory_hostname }}'
+winlogbeat_ssl_enabled: false
+
+wb_home: '{{ default["wb_home"] }}'
+wb_log_dir: '{{ default["wb_log_dir"] }}'
+wb_conf_dir: '{{ default["wb_conf_dir"] }}'
+wb_data_dir: '{{ default["wb_data_dir"] }}'
+
+wb_ssl_key: '{{ default_ssl["key"] }}'
+wb_ssl_certificate: '{{ default_ssl["certificate"] }}'
+wb_ssl_certificate_authorities: '{{ default_ssl["certificate_authorities"] }}'
+
+win_download_path: '{{ ansible_env.TEMP }}/winlogbeat'
+
+#output customization:
+winlogbeat_output: elasticsearch
+
+elasticsearch:
+  host: localhost
+  port: 9200
+
+logstash:
+  host: localhost
+  port: 5044
+
+winlogbeat_service_name: winlogbeat
+winlogbeat_bulk_max_size: 500
+winlogbeat_worker: 1
+winlogbeat_logging_to_syslog: false
+winlogbeat_logging_to_files: true
+winlogbeat_rotateeverybytes: 104857600
+winlogbeat_keepfiles: 30
+winlogbeat_ignore_older: 0
+winlogbeat_scan_frequency: 15s
+winlogbeat_harvester_buffer_size: 65535
+winlogbeat_logname: "winlogbeat.log"
