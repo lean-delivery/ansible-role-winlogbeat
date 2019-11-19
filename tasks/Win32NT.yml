@@ -44,8 +44,8 @@
     src: '{{ wb_path_file.src }}'
     dest: '{{ wb_path_file.dst }}'
   loop:
-#    - src: winlogbeat.yml.j2
-#      dst: '{{ path.config }}\winlogbeat.yml'
+    - src: winlogbeat.yml.j2
+      dst: '{{ path.config }}\winlogbeat.yml'
     - src: winlogbeat-template.bat.j2
       dst: '{{ path.home }}\winlogbeat.bat'
   loop_control:
