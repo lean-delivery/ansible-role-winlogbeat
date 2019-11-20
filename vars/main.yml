@@ -1,0 +1,16 @@
+---
+# vars file for ansible-role-winlogbeat
+wb_major_version: '{{ elastic_branch }}.x'
+es_repo_name: '{{ es_use_oss_version | ternary("oss-" + wb_major_version, wb_major_version) }}'
+wb_package_name: winlogbeat
+
+path:
+  home: '{{ wb_home }}'
+  config: '{{ wb_conf_dir }}'
+  data: '{{ wb_data_dir }}'
+  logs: '{{ wb_log_dir }}'
+
+ssl:
+  key: '{{ wb_ssl_key }}'
+  certificate: '{{ wb_ssl_certificate }}'
+  certificate_authorities: '{{ wb_ssl_certificate_authorities }}'

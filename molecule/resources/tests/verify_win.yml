@@ -1,0 +1,22 @@
+---
+# This is an example playbook to execute Ansible tests.
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if a service is installed
+      win_service:
+        name: winlogbeat
+      register: wb_service_info
+
+    - name: Check winlogbeat version
+      win_command: winlogbeat version
+      register: winlogbeat_ver
+      changed_when: false
+
+    - name: Debug winlogbeat version
+      debug:
+        var: winlogbeat_ver.stdout
+
+    - name: Assert that winlogbeat package is installed
+      assert:
+        that: "'running' in wb_service_info.state"

@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  role_name: winlogbeat
+  author: Lean Delivery Team <team@lean-delivery.com>
+  description: Ansible role for installing Winlogbeat.
+  company: EPAM Systems
+  issue_tracker_url: https://github.com/lean-delivery/ansible-role-winlogbeat/issues
+  license: Apache
+  min_ansible_version: 2.8
+  platforms:
+    - name: "Windows"
+      versions:
+        - "2016"
+        - "2019"
+  galaxy_tags:
+    - winlogbeat
+    - elasticsearch
+    - elk
+    - logging
+    - monitoring
+    - system
+dependencies: []

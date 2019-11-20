@@ -1,0 +1,11 @@
+---
+default:
+  wb_home: C:\program files\winlogbeat
+  wb_log_dir: C:\program files\winlogbeat\logs
+  wb_conf_dir: C:\program files\winlogbeat
+  wb_data_dir: C:\program files\winlogbeat\data
+
+default_ssl:
+  key: c:\tls\private\server.key
+  certificate: c:\tls\certs\server.pem
+  certificate_authorities: c:\CA\ca-root.pem

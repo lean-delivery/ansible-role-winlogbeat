@@ -1,0 +1,76 @@
+---
+- name: Set winlogbeat_version to last version
+  set_fact:
+    winlogbeat_version: '{{ winlogbeat_last_version }}'
+  when: winlogbeat_version.find('.x') == 1
+
+- name: Create temporary build directory
+  win_file:
+    state: directory
+    path: '{{ win_download_path }}'
+
+- name: Setup path folders
+  win_file:
+    path: '{{ path_folder.value }}'
+    state: directory
+  with_dict: '{{ path }}'
+  loop_control:
+    loop_var: path_folder
+
+- name: Download winlogbeat
+  win_get_url:
+    url: '{{ es_win_url }}'
+    dest: '{{ win_download_path }}\winlogbeat.zip'
+    force: false
+  register: download_win_package
+  until: download_win_package is succeeded
+
+- name: Unzip winlogbeat
+  win_unzip:
+    src: '{{ win_download_path }}/winlogbeat.zip'
+    dest: '{{ win_download_path }}'
+    creates: '{{ win_download_path }}/winlogbeat-{{ winlogbeat_version }}-windows-x86_64'
+
+- name: Copy files to home directory
+  win_copy:
+    src: '{{ win_download_path }}/winlogbeat-{{ winlogbeat_version }}-windows-x86_64/'
+    dest: '{{ path.home }}/'
+    force: false
+    remote_src: true
+  notify: Restart winlogbeat win
+
+- name: Templating winlogbeat configuration
+  win_template:
+    src: '{{ wb_path_file.src }}'
+    dest: '{{ wb_path_file.dst }}'
+  loop:
+    - src: winlogbeat.yml.j2
+      dst: '{{ path.config }}\winlogbeat.yml'
+    - src: winlogbeat-template.bat.j2
+      dst: '{{ path.home }}\winlogbeat.bat'
+  loop_control:
+    loop_var: wb_path_file
+  notify: Restart winlogbeat win
+
+- name: Install nssm
+  win_chocolatey:
+    name: nssm
+    state: present
+
+- name: Create service via nssm
+  win_nssm:
+    name: '{{ winlogbeat_service_name }}'
+    application: '{{ path.home }}\winlogbeat.bat'
+    state: present
+  notify: Restart winlogbeat win
+
+- name: Ensure that winlogbeat path present in 'Path' variable
+  win_path:
+    elements: '{{ path.home }}'
+    state: present
+    scope: machine
+
+- name: Start a service
+  win_service:
+    name: '{{ winlogbeat_service_name }}'
+    state: started

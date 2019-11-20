@@ -1,0 +1,33 @@
+---
+- name: Load a variable file based on the OS type, or a default if not found
+  include_vars: '{{ platform_vars }}'
+  with_first_found:
+    - '{{ ansible_system }}.yml'
+    - default.yml
+  loop_control:
+    loop_var: platform_vars
+
+- block:
+    - name: Fetch release page
+      uri:
+        url: 'https://api.github.com/repos/elastic/elasticsearch/releases/latest'
+        return_content: false
+      register: root_page
+
+    - name: Find release version
+      set_fact:
+        winlogbeat_last_version: '{{ root_page.json.tag_name[1:] }}'
+
+    - name: Debug winlogbeat_last_version
+      debug:
+        var: winlogbeat_last_version
+  when: winlogbeat_find_last_version
+  delegate_to: localhost
+
+- name: Configure and install packages for current OS
+  include_tasks: '{{ platform_tasks }}'
+  with_first_found:
+    - '{{ ansible_system }}.yml'
+    - not-supported.yml
+  loop_control:
+    loop_var: platform_tasks
