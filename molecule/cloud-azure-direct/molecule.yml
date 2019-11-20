@@ -24,7 +24,7 @@ platforms:
 
   - name: test-azure-Windows2019-winlogbeat
     platform: windows2019core
-    assign_public_ip: true
+    assign_public_ip: false
     vm_size: Standard_D2s_v3
     az_location: northeurope
     az_resource_group_name: epm-ldi
