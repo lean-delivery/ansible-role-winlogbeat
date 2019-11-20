@@ -1,10 +1,11 @@
 winlogbeat role
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-winlogbeat/develop/LICENSE)
+[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-winlogbeat.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-winlogbeat)
 [![Build Status](https://gitlab.com/lean-delivery/ansible-role-winlogbeat/badges/develop/pipeline.svg)](https://gitlab.com/lean-delivery/ansible-role-winlogbeat/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.winlogbeat-blue.svg)](https://galaxy.ansible.com/lean_delivery/winlogbeat)
-![Ansible](https://img.shields.io/ansible/role/d/role_id.svg)
-![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2Frole_id%2F&query=$.min_ansible_version)
+![Ansible](https://img.shields.io/ansible/role/d/44768.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F44768%2F&query=$.min_ansible_version)
 
 ## Summary
 
@@ -49,7 +50,7 @@ Is used to select specific Winlogbeat version to be installed. Default value is 
 Name of the winlogbeat node. Default value is `{{ inventory_hostname }}`. If this options is not defined, the hostname is used.
 - `winlogbeat_ssl_enabled`
 Turns on/off SSL connection between winlogbeat and logstash/elasticsearch. SSL options should be set by corresponding dict fields like shown below:
-```
+```yaml
   ssl:
     key: 'c:\tls\private\server.key'
     certificate: 'c:\tls\certs\server.pem'
@@ -58,13 +59,15 @@ Turns on/off SSL connection between winlogbeat and logstash/elasticsearch. SSL o
 
 
 The `path` section of the configuration options defines where Winlogbeat looks for its files. For example, Winlogbeat looks for the Elasticsearch template file in the configuration path and writes log files in the logs path. Winlogbeat looks for its registry files in the data path. Default values for Linux host are set up this way:
-```
+
+```yaml
 path:
   home: 'c:\program files\winlogbeat'
   config: 'c:\program files\winlogbeat'
   data: 'c:\programdata\winlogbeat'
   logs: 'c:\programdata\winlogbeat\logs'
 ```
+
 - `win_download_path`
 Temp directory for Windows to download and upzip Winlogbeat package. Default value is `'{{ ansible_env.TEMP }}/winlogbeat'` (ansible_env.TEMP value solves idempotence issue)
 
@@ -130,7 +133,7 @@ Example Playbook
 - name: Install winlogbeat
   hosts: all
   roles:
-    - role: ansible-role-winlogbeat
+    - role: lean_delivery.winlogbeat
 ```
 
 
