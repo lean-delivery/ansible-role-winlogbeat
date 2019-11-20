@@ -28,7 +28,7 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
 AWS winlogbeat:
   variables:
