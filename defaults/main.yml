@@ -27,8 +27,7 @@ elasticsearch:
   port: 9200
 
 logstash:
-  host: localhost
-  port: 5044
+  host: localhost:5044
 
 winlogbeat_service_name: winlogbeat
 winlogbeat_bulk_max_size: 500
